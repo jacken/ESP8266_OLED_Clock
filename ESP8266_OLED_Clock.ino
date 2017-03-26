@@ -14,14 +14,15 @@ products from Adafruit!
 Written by Limor Fried/Ladyada  for Adafruit Industries.  
 BSD license, check license.txt for more information
 All text above, and the splash screen must be included in any redistribution
-*********************************************************************/    
+<<<<<<< Local Changes
+*********************************************************************/
 #include <ESP8266WiFi.h>
 #include <WiFiUdp.h>
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include "./libraries/NTPClient.h"
+#include <NTPClient.h>
 #include "./private.h"
 
 /*
@@ -40,7 +41,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 
 WiFiUDP ntpUDP;
 
-NTPClient timeClient(ntpUDP);
+NTPClient timeClient(ntpUDP, "europe.pool.ntp.org");
 
 void setup()   {                
   Serial.begin(115200);
@@ -62,7 +63,7 @@ void setup()   {
   WiFi.begin(ssid, password);
 
   display.clearDisplay();
-  display.println("Initializing Wifi")
+  display.println("Initializing Wifi");
   display.display();
 
    while ( WiFi.status() != WL_CONNECTED ) {
@@ -74,7 +75,6 @@ void setup()   {
    display.clearDisplay();
    display.display();
    
-   timeClient.begin(ntpUDP, "ntp1.sth.netnod.se");
  }
 
 
