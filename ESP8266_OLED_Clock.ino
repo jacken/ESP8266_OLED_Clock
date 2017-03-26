@@ -78,5 +78,7 @@ void setup()   {
 
 
 void loop() {
-  
+  display.setCursor(0,0);
+  display.println("running");
+  display.display();
 }
