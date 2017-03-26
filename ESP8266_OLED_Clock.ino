@@ -45,7 +45,8 @@ NTPClient timeClient(ntpUDP, "europe.pool.ntp.org");
 
 void setup()   {                
   Serial.begin(115200);
-
+  Serial.println(ssid);
+  Serial.println(password);
   // by default, we'll generate the high voltage from the 3.3v line internally! (neat!)
   display.begin(SSD1306_SWITCHCAPVCC, 0x3C);  // initialize with the I2C addr 0x3D (for the 128x64)
   // init done
@@ -59,18 +60,19 @@ void setup()   {
   display.setCursor(0,0);
   display.println("Hello, world!");
   display.display();
-  
-  WiFi.begin(ssid, password);
 
   display.clearDisplay();
   display.println("Initializing Wifi");
   display.display();
 
-   while ( WiFi.status() != WL_CONNECTED ) {
-     delay ( 500 );
-     display.print ( "." );
-     display.display();
-   }
+  WiFi.begin(ssid, password);
+
+  while ( WiFi.status() != WL_CONNECTED ) {
+    delay ( 500 );
+    Serial.print ( "." );
+  }
+
+  timeClient.begin();
 
    display.clearDisplay();
    display.display();
@@ -82,4 +84,10 @@ void loop() {
   display.setCursor(0,0);
   display.println("running");
   display.display();
+  timeClient.update();
+
+  Serial.println(timeClient.getFormattedTime());
+
+  delay(1000);
+  
 }
