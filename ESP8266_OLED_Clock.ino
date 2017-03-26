@@ -21,6 +21,13 @@ All text above, and the splash screen must be included in any redistribution
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "./libraries/NTPClient.h"
+
+/*
+Real values included in file private.h
+const char *ssid     = "<SSID>";
+const char *password = "<PASSWORD>"
+*/
+
 #define OLED_RESET 0
 Adafruit_SSD1306 display(OLED_RESET);
 
