@@ -21,6 +21,14 @@ All text above, and the splash screen must be included in any redistribution
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
 #include "./libraries/NTPClient.h"
+#include "./private.h"
+
+/*
+Your values for wifi login should be included in file private.h
+const char *ssid     = "<SSID>";
+const char *password = "<PASSWORD>"
+*/
+
 #define OLED_RESET 0
 Adafruit_SSD1306 display(OLED_RESET);
 
@@ -28,6 +36,10 @@ Adafruit_SSD1306 display(OLED_RESET);
 #if (SSD1306_LCDHEIGHT != 64)
 #error("Height incorrect, please fix Adafruit_SSD1306.h!");
 #endif
+
+WiFiUDP ntpUDP;
+
+NTPClient timeClient(ntpUDP);
 
 void setup()   {                
   Serial.begin(115200);
@@ -45,10 +57,26 @@ void setup()   {
   display.setCursor(0,0);
   display.println("Hello, world!");
   display.display();
+  
+  WiFi.begin(ssid, password);
+
+  display.clearDisplay();
+  display.println("Initializing Wifi")
+  display.display();
+
+   while ( WiFi.status() != WL_CONNECTED ) {
+     delay ( 500 );
+     display.print ( "." );
+     display.display();
+   }
+
+   display.clearDisplay();
+   display.display();
+   
+   timeClient.begin(ntpUDP, "ntp1.sth.netnod.se");
  }
 
 
 void loop() {
   
 }
-
